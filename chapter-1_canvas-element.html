@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Элемент canvas</title>
+</head>
+<body>
+
+<canvas id="canvas" width="800" height="800"></canvas>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    // ctx.fillStyle = "red";
+    // ctx.fillRect(300, 100, 30, 30);
+    // for (let i = 1; i<4; i++) {
+    //     ctx.fillStyle = "green";
+    //     ctx.fillRect(i *70, i *70, 50, 50);
+    // }
+
+    //man
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "red";
+    ctx.beginPath();
+    ctx.arc(73, 35, 25, 0, Math.PI *2, false);
+    ctx.stroke();
+    ctx.fillRect(70, 60, 10, 20);
+    ctx.fillRect(35, 80, 80, 80);
+    ctx.fillRect(0, 80, 35, 10);
+    ctx.fillRect(115, 80, 35, 10);
+    ctx.fillRect(35, 160, 10, 35);
+    ctx.fillRect(105, 160, 10, 35);
+
+    //tv signal picture
+    ctx.fillStyle = "red";
+    ctx.fillRect(35, 210, 30, 60);
+    ctx.fillStyle = "green";
+    ctx.fillRect(65, 210, 30, 60);
+    ctx.fillStyle = "blue"
+    ctx.fillRect(95, 210, 30, 60);
+
+
+    ctx.strokeStyle = "DeepPink";
+    ctx.strokeRect(140, 210, 60, 40);
+
+    //линии и пути
+    ctx.strokeStyle = "DarkTurquoise"
+    ctx.beginPath();
+    ctx.moveTo(230, 210);
+    ctx.lineTo(290, 270)
+    ctx.moveTo(290, 210);
+    ctx.lineTo(230, 270)
+    ctx.stroke();
+
+    //man2
+    ctx.strokeRect(220, 10, 30, 30);
+    ctx.beginPath();
+    ctx.moveTo(235,40); //туловище
+    ctx.lineTo(235, 90);
+
+    ctx.moveTo(235,60); //левая рука
+    ctx.lineTo(210, 45);
+
+    ctx.moveTo(235,60); //правая рука
+    ctx.lineTo(260, 45);
+
+    ctx.moveTo(235,90); //левая нога
+    ctx.lineTo(210, 120);
+
+    ctx.moveTo(235,90); //правая нога
+    ctx.lineTo(260, 120);
+    ctx.stroke();
+
+    //заливка путей цветом
+    ctx.fillStyle = "DarkSlateBlue";
+    ctx.beginPath();
+    ctx.moveTo(320,70);
+    ctx.lineTo(320, 120);
+    ctx.lineTo(370, 120);
+    ctx.lineTo(370, 70);
+    ctx.lineTo(345, 50);
+    ctx.lineTo(320,70);
+    ctx.fill();
+
+    //дуги и окружности
+    ctx.strokeStyle = "Darkorange";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(65, 350, 30, 0, Math.PI*2, false);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(150, 350, 30, 0, Math.PI, false);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(210, 350, 30, 0, Math.PI/2, false);
+    ctx.stroke();
+
+    //рисование нескольких окружностей с плмощью функции
+    function circle (x, y, r, contour, color) {
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.arc(x, y, r, 0, Math.PI*2, false);
+        if (contour === "stroke") {
+            ctx.strokeStyle = color;
+            ctx.stroke();
+        } else if (contour === "fill") {
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+    }
+    circle(65, 440, 5, "stroke", "red");
+    circle(65, 440, 10, "stroke", "Darkorange");
+    circle(65, 440, 15, "stroke", "gold");
+    circle(65, 440, 20, "stroke", "GreenYellow");
+    circle(65, 440, 25, "stroke", "DeepSkyBlue");
+
+    //снеговик
+    circle(150, 440, 20, "stroke", "black");
+    circle(150, 486, 26, "stroke", "black");
+    circle(158, 435, 4, "fill", "black");
+    circle(142, 435, 4, "fill", "black");
+    circle(150, 445, 4, "fill", "orange");
+    circle(150, 475, 4, "fill", "black");
+    circle(150, 485, 4, "fill", "black");
+    circle(150, 495, 4, "fill", "black");
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
