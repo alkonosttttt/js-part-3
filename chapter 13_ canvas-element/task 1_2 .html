@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tasks canvas</title>
+</head>
+<body>
+<!--   // canvas задания 1, 2-->
+<canvas id="canvas" width="600" height="600"></canvas>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    function drawSnow (x, y) {
+        function circle(x, y, r, contour, color) {
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.arc(x, y, r, 0, Math.PI * 2, false);
+            if (contour === "stroke") {
+                ctx.strokeStyle = color;
+                ctx.stroke();
+            } else if (contour === "fill") {
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+        }
+        circle(x, y, 20, "stroke", "black");
+        circle(x, y+48, 26, "stroke", "black");
+        circle(x+8, y-5, 4, "fill", "black");
+        circle(x-8, y-5, 4, "fill", "black");
+        circle(x, y+5, 4, "fill", "orange");
+        circle(x, y+35, 4, "fill", "black");
+        circle(x, y+45, 4, "fill", "black");
+        circle(x, y+55, 4, "fill", "black");
+    }
+
+    drawSnow(200, 200);
+
+    //рисование по массиву точек
+    let points = [[50, 50], [50, 100], [100, 100], [100, 50], [50, 50]];
+    let mysteryPoints = [[50, 50], [50, 100], [25, 120], [100, 50], [70, 90], [100, 90],
+        [70, 120]];
+
+    function drawPoints(p) {
+        ctx.strokeStyle = "red"
+        ctx.beginPath();
+        ctx.moveTo(p[0][0], p[0][1])
+        for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(p[i][0], p[i][1]);
+            ctx.stroke();
+        }
+    }
+    drawPoints(mysteryPoints);
+</script>
+</body>
+</html>

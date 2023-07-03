@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Человечек в «Виселице»</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    ctx.strokeStyle = "black";
+
+
+    let words = ["кот", "ку"];
+    var word = words[Math.floor(Math.random() * words.length)];
+    var answerArray = [];
+    for (var i = 0; i < word.length; i++) {
+        answerArray[i] = "_";
+    }
+    let remainingLetters = word.length;
+    let tryCount = 6;
+
+    console.log(answerArray);
+    console.log(word);
+
+
+    while ((remainingLetters > 0) && (tryCount > 0)) {
+        alert(answerArray.join(" "));
+        let guess = prompt("введите строчную букву иди нажмите отмена для выхода").toLowerCase();
+
+        if (guess === null) {
+            break;
+        } else if (guess.length !== 1) {
+            alert("введите одиночную букву");
+        } else {
+            let isHit = false; //обновление состояния игры
+            for (let j = 0; j < word.length; ++j) {
+                console.log(answerArray[j])
+                if (answerArray[j] === guess) {
+                    alert("Эта буква уже угадана");
+                    break;
+                }
+                if (word[j] === guess) {
+                    answerArray[j] = guess;
+                    remainingLetters--;
+                    isHit = true;
+                }
+            }
+            if (!isHit) {
+                tryCount--;
+                human(tryCount);
+                alert("у вас осталось" + tryCount);
+                console.log(tryCount);
+
+                if (tryCount === 0) {
+                    alert("у вас кончились 3 попытки");
+                    break;
+                }
+            }
+        }
+
+    }
+    alert("Загаданное слово " + word);
+
+    function human (tryCount) {
+        if (tryCount === 5) {
+            ctx.strokeRect(50, 50, 20, 20);
+        }
+        else if (tryCount === 4) {
+            ctx.beginPath();
+            ctx.moveTo(60, 70);
+            ctx.lineTo(60, 100);
+            ctx.stroke();
+        }
+        else if (tryCount === 3) {
+            ctx.beginPath();
+            ctx.moveTo(60, 85);
+            ctx.lineTo(45, 75);
+            ctx.stroke();
+        }
+        else if (tryCount === 2) {
+            ctx.beginPath();
+            ctx.moveTo(60, 85);
+            ctx.lineTo(75, 75);
+            ctx.stroke();
+        }
+        else if (tryCount === 1) {
+            ctx.beginPath();
+            ctx.moveTo(60, 100);
+            ctx.lineTo(45, 120);
+            ctx.stroke();
+        }
+        else if (tryCount === 0) {
+            ctx.beginPath();
+            ctx.moveTo(60, 100);
+            ctx.lineTo(75, 120);
+            ctx.stroke();
+        }
+    }
+
+</script>
+</body>
+</html>

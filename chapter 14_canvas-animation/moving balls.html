@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moving balls</title>
+</head>
+<body>
+<canvas id="canvas" width="250" height="250"></canvas>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    ctx.lineWidth = 2;
+    let colors = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"];
+
+    //выбор случайногоцвета
+    function pickRandomWorld() {
+        return colors[Math.floor(Math.random()*colors.length)]
+    }
+
+    let width = canvas.width;
+    let height = canvas.height;
+
+    //конструктор мяч
+    let Ball = function () {
+        this.x = 100;
+        this.y = 100;
+        this.xSpeed = Math.floor(Math.random() * 10 - 5);
+        this.ySpeed = Math.floor(Math.random() * 10 - 5);
+        this.color = pickRandomWorld();
+    }
+
+    //функция рисования мяча
+    function circle(x, y, r, fillCircle) {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+        if (fillCircle) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
+    }
+
+    //добавление метода draw для отрисовки мяча к свойству прототип констр. ball,
+    //чтобы все объекты созд при помощи ball могли использовать этот метод
+    Ball.prototype.draw = function () {
+        ctx.fillStyle = this.color;
+        ctx.strokeStyle = this.color;
+        circle(this.x, this.y, 3, true);
+
+    };
+
+    //метод для движения мяча
+    Ball.prototype.move = function () {
+        this.x += this.xSpeed;
+        this.y += this.ySpeed;
+    };
+
+    //метод проверяющий столкновения со стенками
+    Ball.prototype.checkCollision = function () {
+        if (this.x < 0 || this.x > width) {
+            this.xSpeed *= -1;
+        }
+        if (this.y < 0 || this.y > height) {
+            this.ySpeed *= -1;
+        }
+    };
+
+
+    //массив с мячами
+    let balls = [];
+    for (let i = 0; i < 10; i++) {
+        balls[i] = new Ball();
+    }
+
+
+
+
+    setInterval(function () {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < 10; i++) {
+            balls[i].draw();
+            balls[i].move();
+            balls[i].checkCollision();
+        }
+        ctx.strokeRect(0, 0, width, height);
+    }, 30)
+
+</script>
+</body>
+</html>

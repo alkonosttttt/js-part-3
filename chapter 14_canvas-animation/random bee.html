@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>random bee</title>
+</head>
+<body>
+<canvas id="canvas" width="200" height="200"></canvas>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    ctx.lineWidth = 2;
+
+    let x = 100;
+    let y = 100;
+
+    setInterval(function () {
+        ctx.clearRect(0, 0, 200, 200);
+        drawBee(x, y,);
+        x = update(x);
+        y = update(y);
+        ctx.strokeRect(0, 0, 200, 200);
+    }, 30)
+
+    //рисует круг заполненный или нет
+    function circle(x, y, r, fillCircle) {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+        if (fillCircle) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
+    }
+
+    //функция отрисовки пчелы
+    function drawBee(x, y) {
+        ctx.fillStyle = "gold";
+        circle(x, y, 8, true);
+        ctx.strokeStyle = "black"
+        circle(x, y, 8, false);
+        circle(x - 2, y - 2, 2, false);
+        circle(x + 2, y - 2, 2, false);
+        circle(x - 4, y - 11, 4, false);
+        circle(x + 4, y - 11, 4, false);
+    }
+
+    //функция перемещение пчелы от -2 до 2
+    function update(coordinate) {
+        let offset = Math.random() * 4 - 2;
+        coordinate += offset;
+        if (coordinate > 200) {
+            coordinate = 200;
+        }
+        if (coordinate < 0) {
+            coordinate = 0;
+        }
+        return coordinate;
+    }
+
+</script>
+</body>
+</html>

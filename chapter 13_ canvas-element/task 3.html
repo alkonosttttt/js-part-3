@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Рисование по массиву точек</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+
+    $("canvas").mousemove( function (event) {
+        ctx.beginPath();
+        ctx.arc(event.offsetX, event.offsetY, 3, 0, Math.PI *2, false);
+        ctx.stroke();
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>АНИМАЦИИ С ПОМОЩЬЮ CANVAS</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    let position = 0;
+    setInterval(rectangle, 30)
+    function rectangle() {
+        ctx.clearRect(0, 0, 240, 40);
+        ctx.fillRect(position, 0, 40, 40);
+        position++;
+        if (position>200) {
+            position= 0;
+        }
+    }
+
+    let size = 0;
+    setInterval(rectSize, 30)
+    function rectSize() {
+        ctx.clearRect(0, 50, 200, 200)
+        ctx.fillRect(0, 50, size, size);
+        size++;
+        if (size>200) {
+            size = 0;
+        }
+
+    }
+
+
+</script>
+</body>
+</html>
