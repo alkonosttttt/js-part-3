@@ -15,6 +15,10 @@
     $("canvas").mousemove( function (event) {
         ctx.beginPath();
         ctx.arc(event.offsetX, event.offsetY, 3, 0, Math.PI *2, false);
+
+        // можно и так, я разницы в результате не поняла
+        //ctx.arc(event.pageX, event.pageY, 3, 0, Math.PI *2, false);
+
         ctx.stroke();
     })
 

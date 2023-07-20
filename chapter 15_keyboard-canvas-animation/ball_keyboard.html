@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ball keyboard </title>
+</head>
+<body>
+<canvas id="canvas" width="400" height="400"></canvas>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<script>
+    //Наша программа будет рисовать мяч и перемещать его вправо.
+    //Нажатия клавиш-стрелок будут менять направление мяча, а нажатие на «пробел» остановит его движение.
+    //Если мяч уйдет за границу «холста», он появится с противоположной стороны.
+    //Например, если мяч уйдет за правую границу, он снова появится у левой границы, продолжая двигаться в прежнем направлении
+
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    let width = canvas.width;
+    let height = canvas.height;
+
+    //функция для отрисовки мяча
+    function circle(x, y, r, fill) {
+        ctx.beginPath()
+        ctx.arc(x, y, r, 0, 2 * Math.PI, false)
+        if (fill) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
+    }
+
+    //конструктор Ball, чтобы создавать с его помощью объект-мяч
+    let Ball = function () {
+        //положение мяча посередине области канвас. свойствам x и y соответствуют серединам области
+        this.x = width / 2;
+        this.y = height / 2;
+        //горизонтальная скорость 5, вертикальная 0
+        this.xSpeed = 5;
+        this.ySpeed = 0;
+
+    }
+    //метод move,перемещающий мяч в новую позицию в зависимости от его текущей позиции, а также значений xSpeed и ySpeed.
+    Ball.prototype.move = function () {
+        this.x += this.xSpeed;
+        this.y += this.ySpeed;
+        if (this.x > width) {
+            this.x = 0;
+        } else if (this.x < 0) {
+            this.x = width;
+        }
+        if (this.y < 0) {
+            this.y = height;
+        } else if (this.y > height) {
+            this.y = 0;
+        }
+    }
+
+    //Рисовать мяч мы будем с помощью метода draw
+    Ball.prototype.draw = function () {
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(0, 0, width, height)
+        circle(this.x, this.y, 10, true)
+    }
+
+
+    /*
+    как задавать направление движения мяча?
+        Мы будем делать это в методе setDirection, который будет вызываться из обработчика события keydown (речь о котором пойдет ниже).
+    Обработчик передаст методу setDirection информацию о нажатой клавише в виде строки ("left", "up", "right", "down" или "stop").
+    На основе этого setDirection будет менять свойства мяча xSpeed и ySpeed — таким образом, чтобы направление полета мяча соответствовало направлению, выбранному нажатием клавиши.
+        Например,  если методу передана строка "down", мы сбросим this.xSpeed в 0,  а this.ySpeed присвоим значение 5.
+    */
+    Ball.prototype.setDirection = function (direction) {
+        if (direction === "up") {
+            this.xSpeed = 0;
+            this.ySpeed = -5;
+        } else if (direction === "down") {
+            this.xSpeed = 0;
+            this.ySpeed = 5;
+        } else if (direction === "right") {
+            this.xSpeed = 5;
+            this.ySpeed = 0;
+        } else if (direction === "left") {
+            this.xSpeed = -5;
+            this.ySpeed = 0;
+        } else if (direction === "stop") {
+            this.xSpeed = 0;
+            this.ySpeed = 0;
+        }
+    }
+
+    //создание объекта мяч с помощью конструктора
+    let ball = new Ball();
+
+
+    //преобразования кодов клавиш в соответствующие им направления.
+    let keyActions = {
+        32: "stop",
+        37: "left",
+        38: "up",
+        39: "right",
+        40: "down",
+    }
+
+    //Реакция на нажатия клавиш
+    $("body").keydown(function (event) {
+        let direction = keyActions[event.keyCode]
+        ball.setDirection(direction);
+    })
+
+    //Анимация мяча
+    setInterval(ballFunction, 10);
+    function ballFunction() {
+        ctx.clearRect(0, 0, width, height);
+        ball.draw();
+        ball.move();
+        ball.setDirection();
+    }
+
+
+
+</script>
+</body>
+</html>
