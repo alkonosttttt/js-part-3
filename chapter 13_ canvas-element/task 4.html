@@ -56,7 +56,7 @@
                 console.log(tryCount);
 
                 if (tryCount === 0) {
-                    alert("у вас кончились 3 попытки");
+                    alert("у вас кончились 6 попыток");
                     break;
                 }
             }
@@ -65,7 +65,9 @@
     }
     alert("Загаданное слово " + word);
 
+
     function human (tryCount) {
+
         if (tryCount === 5) {
             ctx.strokeRect(50, 50, 20, 20);
         }
